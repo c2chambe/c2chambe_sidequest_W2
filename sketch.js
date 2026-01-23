@@ -163,7 +163,7 @@ function drawBlobCircle(b) {
     // Noise-based radius offset
     const n = noise(
       cos(a) * b.wobbleFreq + 200,
-      sin(a) * b.wobbleFreq + 100,
+      sin(a) * b.wobbleFreq - 100,
       b.t,
     );
 
