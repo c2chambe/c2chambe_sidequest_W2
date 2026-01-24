@@ -75,7 +75,7 @@ function draw() {
   let move = 0;
   if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) move -= 1; // A or ←
   if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) move += 1; // D or →
-  blob3.vx += blob3.accel * move;
+  blob3.vx += blob3.accel * move + random(-2, 1); //random movement?
 
   // --- Apply friction and clamp speed ---
   blob3.vx *= blob3.onGround ? blob3.frictionGround : blob3.frictionAir;
@@ -160,12 +160,16 @@ function drawBlobCircle(b) {
   for (let i = 0; i < b.points; i++) {
     const a = (i / b.points) * TAU;
 
-    // Noise-based radius offset
-    const n = noise(
-      cos(a) * b.wobbleFreq + 200,
-      sin(a) * b.wobbleFreq - 100,
-      b.t,
-    );
+    if (blob3.onGround || box.x - box.w / 2 === 0 - floorY3) {
+      let n = 0;
+    } else {
+      // Noise-based radius offset
+      n = noise(
+        cos(a) * 10 * b.wobbleFreq + 200,
+        sin(a) * 10 * b.wobbleFreq - 100,
+        b.t * random(1, 3),
+      );
+    }
 
     const r = b.r + map(n, 0, 1, -b.wobble, b.wobble);
 
@@ -181,8 +185,10 @@ function keyPressed() {
     (key === " " || key === "W" || key === "w" || keyCode === UP_ARROW) &&
     blob3.onGround
   ) {
-    blob3.vy = blob3.jumpV;
+    blob3.vy = blob3.jumpV - 0.5;
+    frictionAir = 0.95;
     blob3.onGround = false;
+    //Smooth Wooble on jump
   }
 }
 
