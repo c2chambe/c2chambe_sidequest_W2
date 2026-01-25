@@ -8,10 +8,10 @@ let blob3 = {
   y: 0,
 
   // Visual properties
-  r: 26, // Base radius
-  points: 48, // Number of points used to draw the blob
+  r: 16, // Base radius
+  points: 25, // Number of points used to draw the blob
   wobble: 7, // Edge deformation amount
-  wobbleFreq: 0.9,
+  wobbleFreq: 0.3,
 
   // Time values for breathing animation
   t: 0,
@@ -40,7 +40,7 @@ let blob3 = {
 let platforms = [];
 
 function setup() {
-  createCanvas(640, 360);
+  createCanvas(1280, 360);
 
   // Define the floor height
   floorY3 = height - 36;
@@ -49,13 +49,16 @@ function setup() {
   textFont("sans-serif");
   textSize(14);
 
+  //drawing background gradient
+
   // Create platforms (floor + steps)
   platforms = [
     { x: 0, y: floorY3, w: width, h: height - floorY3 }, // floor
-    { x: 120, y: floorY3 - 70, w: 120, h: 12 }, // low step
-    { x: 300, y: floorY3 - 120, w: 90, h: 12 }, // mid step
-    { x: 440, y: floorY3 - 180, w: 130, h: 12 }, // high step
-    { x: 520, y: floorY3 - 70, w: 90, h: 12 }, // return ramp
+    { x: 120, y: floorY3 - 70, w: 120, h: 75 }, // low wall
+    { x: 300, y: floorY3 - 120, w: 90, h: 12 }, // mid platform
+    { x: 470, y: floorY3 - 180, w: 180, h: 70 }, // highest middle platform
+    { x: 470, y: floorY3 - 60, w: 120, h: 70 }, // right platform
+    //{ x: 600, y: floorY3 - 180, w: 12, h: 90 }, // potential wall
   ];
 
   // Start the blob resting on the floor
@@ -65,6 +68,17 @@ function setup() {
 function draw() {
   background(240);
 
+  for (let i = 0; i <= width / 2; i++) {
+    line(i, 0, i, 360);
+    stroke(255 - i / 2);
+  }
+
+  for (let i = width / 2; i >= width / 2 && i <= width; i++) {
+    line(i, 0, i, 360);
+    stroke(255 - (width - i) / 2);
+  }
+
+  noStroke();
   // --- Draw all platforms ---
   fill(200);
   for (const p of platforms) {
@@ -141,7 +155,7 @@ function draw() {
 
   // --- HUD ---
   fill(0);
-  text("Move: A/D or ←/→  •  Jump: Space/W/↑  •  Land on platforms", 10, 18);
+  text("Move: A/D or ←/→  •  Jump: Space/W/↑  •  ", 10, 18); //Added new text
 }
 
 // Axis-Aligned Bounding Box (AABB) overlap test
@@ -160,14 +174,15 @@ function drawBlobCircle(b) {
   for (let i = 0; i < b.points; i++) {
     const a = (i / b.points) * TAU;
 
-    if (blob3.onGround || box.x - box.w / 2 === 0 - floorY3) {
-      let n = 0;
+    if (blob3.onGround && blob3.x === 80) {
+      let n = noise(0, 0, 0);
+      blob3.vx = 0;
     } else {
       // Noise-based radius offset
       n = noise(
-        cos(a) * 10 * b.wobbleFreq + 200,
-        sin(a) * 10 * b.wobbleFreq - 100,
-        b.t * random(1, 3),
+        cos(a) * 10 * b.wobbleFreq + 900,
+        sin(a) * 10 * b.wobbleFreq - 200,
+        b.t * random(1, 9),
       );
     }
 
