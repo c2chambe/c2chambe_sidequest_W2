@@ -81,11 +81,11 @@ function draw() {
   let door = {
     x: 570,
     y: floorY3 - 240,
-    w: 40,
+    w: 50,
     h: 60,
   };
 
-  fill(145, 30, 10);
+  fill(160, 30, 10);
   rect(door.x, door.y, door.w, door.h);
 
   // --- Input: left/right movement ---
