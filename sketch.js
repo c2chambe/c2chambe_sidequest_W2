@@ -65,11 +65,7 @@ function setup() {
 }
 
 function draw() {
-  //left to right gradient across canvas
-  for (let i = 0; i <= width; i++) {
-    line(i, 0, i, 360);
-    stroke(255 - i / 4);
-  }
+  background(60);
 
   noStroke();
   // --- Draw all platforms ---
@@ -81,19 +77,18 @@ function draw() {
   let door = {
     x: 570,
     y: floorY3 - 240,
-    w: 50,
+    w: 70,
     h: 60,
   };
 
-  fill(160, 30, 10);
+  fill(200, 0, 0);
   rect(door.x, door.y, door.w, door.h);
 
   // --- Input: left/right movement ---
   let move = 0;
   if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) move -= 1; // A or ←
   if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) move += 1; // D or →
-  blob3.vx += blob3.accel * move + random(-2, 1); //random movement?
-
+  blob3.vx += blob3.accel * move + random(-1.85, 1); //PULL EFFECT
   // --- Apply friction and clamp speed ---
   blob3.vx *= blob3.onGround ? blob3.frictionGround : blob3.frictionAir;
   blob3.vx = constrain(blob3.vx, -blob3.maxRun, blob3.maxRun);
@@ -159,7 +154,7 @@ function draw() {
   // --- HUD ---
   fill(355);
   text(
-    "Move: A/D or ←/→  •  Jump: Space/W/↑  •  Shouldn't be too hard for you.",
+    "Move: A/D or ←/→  •  Jump: Space/W/↑  •  Don't listen to it...",
     10,
     18,
   ); //Added new text
@@ -171,7 +166,7 @@ function draw() {
     blob3.y > door.y &&
     blob3.y < door.y + door.h
   ) {
-    text("What took you so long?", door.x - 80, door.y - 20);
+    text("I never wanted to be here", door.x - 100, door.y - 20);
   }
 }
 
@@ -185,7 +180,7 @@ function overlap(a, b) {
 
 // Draws the blob using Perlin noise for a soft, breathing effect
 function drawBlobCircle(b) {
-  fill(20, 120, 255);
+  fill(255, 255, 255);
   beginShape();
 
   for (let i = 0; i < b.points; i++) {

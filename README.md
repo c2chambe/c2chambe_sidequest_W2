@@ -12,31 +12,36 @@ Clarissa Chamberlain, 21067308
 
 ## Description
 
-Base text: Adds several rectangular platforms. The blob is drawn as a noisy circle but collides using a simple axis-aligned bounding box (AABB). X and Y are resolved separately to keep behaviour predictable and teachable.
+This game simulates the emotion of helpnessless and fear, in video game form. The object does not represent the player, but the player in an omnipitent being in this game, that is forcing the ball into submission, but the ball refuses to go down without a fight.
 
-Added several new movement mechanics, changed the design of the ball, and added a win condition to the "game"
+The mechanics are simple - use WASD to move the ball Up, Down, Left or Right, but do not be surprised by how long this may take you to complete successfully.
+
+Frustrated? Unnerved? Worried? Guilty? Thats the point. This is your fault. You're a monster.
 
 ---
 
-## Learning Goals
+## Setup and Interaction Instructions
 
-Learning Goals:
-From example:
-
-- Convert a circular sprite to an AABB for collision
-- Implement overlap test and push-out resolution
-- Manage grounded state only when landing on top faces
-
-Personal:
--Program the ball to move in a way the evoques an emotion, and build the environment to reflect that emotion as well.
+-Open Github link to launch game, move using WASD or Arrow Keys.
 
 - ***
 
+## Iteration notes
+
+    a. Post Playtests (From parents)
+       - Changed the map to be half as long, originally it was double in length.
+       -Changed the background colour to have ball stand out more
+       -Removed gradient to better emphasize emotion
+       -Changed ball colour to better emulate emotion
+       -Decreased difficulty
+
 ## Assets
 
-N/A
+## N/A
 
----
+## References
+
+-N/A
 
 ## GenAI
 
