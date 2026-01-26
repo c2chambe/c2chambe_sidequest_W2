@@ -57,8 +57,7 @@ function setup() {
     { x: 120, y: floorY3 - 70, w: 120, h: 25 }, // low left most wall
     { x: 300, y: floorY3 - 120, w: 90, h: 25 }, // middle left platform
     { x: 480, y: floorY3 - 180, w: 180, h: 200 }, // highest middle platform
-    //{ x: 470, y: floorY3 - 60, w: 120, h: 70 }, // right platform
-    //{ x: 600, y: floorY3 - 180, w: 12, h: 90 }, // potential wall
+    { x: 0, y: floorY3 - 340, w: 640, h: 40 }, //Ceiling
   ];
 
   // Start the blob resting on the floor
@@ -158,7 +157,7 @@ function draw() {
   drawBlobCircle(blob3);
 
   // --- HUD ---
-  fill(0);
+  fill(355);
   text(
     "Move: A/D or ←/→  •  Jump: Space/W/↑  •  Shouldn't be too hard for you.",
     10,
