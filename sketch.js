@@ -40,7 +40,7 @@ let blob3 = {
 let platforms = [];
 
 function setup() {
-  createCanvas(1280, 360);
+  createCanvas(640, 360);
 
   // Define the floor height
   floorY3 = height - 36;
@@ -54,10 +54,10 @@ function setup() {
   // Create platforms (floor + steps)
   platforms = [
     { x: 0, y: floorY3, w: width, h: height - floorY3 }, // floor
-    { x: 120, y: floorY3 - 70, w: 120, h: 75 }, // low wall
-    { x: 300, y: floorY3 - 120, w: 90, h: 12 }, // mid platform
-    { x: 470, y: floorY3 - 180, w: 180, h: 70 }, // highest middle platform
-    { x: 470, y: floorY3 - 60, w: 120, h: 70 }, // right platform
+    { x: 120, y: floorY3 - 70, w: 120, h: 25 }, // low left most wall
+    { x: 300, y: floorY3 - 120, w: 90, h: 25 }, // middle left platform
+    { x: 480, y: floorY3 - 180, w: 180, h: 200 }, // highest middle platform
+    //{ x: 470, y: floorY3 - 60, w: 120, h: 70 }, // right platform
     //{ x: 600, y: floorY3 - 180, w: 12, h: 90 }, // potential wall
   ];
 
@@ -66,24 +66,28 @@ function setup() {
 }
 
 function draw() {
-  background(240);
-
-  for (let i = 0; i <= width / 2; i++) {
+  //left to right gradient across canvas
+  for (let i = 0; i <= width; i++) {
     line(i, 0, i, 360);
-    stroke(255 - i / 2);
-  }
-
-  for (let i = width / 2; i >= width / 2 && i <= width; i++) {
-    line(i, 0, i, 360);
-    stroke(255 - (width - i) / 2);
+    stroke(255 - i / 4);
   }
 
   noStroke();
   // --- Draw all platforms ---
-  fill(200);
+  fill(0);
   for (const p of platforms) {
     rect(p.x, p.y, p.w, p.h);
   }
+
+  let door = {
+    x: 570,
+    y: floorY3 - 240,
+    w: 40,
+    h: 60,
+  };
+
+  fill(145, 30, 10);
+  rect(door.x, door.y, door.w, door.h);
 
   // --- Input: left/right movement ---
   let move = 0;
@@ -155,7 +159,21 @@ function draw() {
 
   // --- HUD ---
   fill(0);
-  text("Move: A/D or ←/→  •  Jump: Space/W/↑  •  ", 10, 18); //Added new text
+  text(
+    "Move: A/D or ←/→  •  Jump: Space/W/↑  •  Shouldn't be too hard for you.",
+    10,
+    18,
+  ); //Added new text
+
+  //Door colision check
+  if (
+    blob3.x > door.x &&
+    blob3.x < door.x + door.w &&
+    blob3.y > door.y &&
+    blob3.y < door.y + door.h
+  ) {
+    text("What took you so long?", door.x - 80, door.y - 20);
+  }
 }
 
 // Axis-Aligned Bounding Box (AABB) overlap test
@@ -174,7 +192,7 @@ function drawBlobCircle(b) {
   for (let i = 0; i < b.points; i++) {
     const a = (i / b.points) * TAU;
 
-    if (blob3.onGround && blob3.x === 80) {
+    if (blob3.onGround && blob3.x - blob3.r <= blob3.r) {
       let n = noise(0, 0, 0);
       blob3.vx = 0;
     } else {
